@@ -1,0 +1,28 @@
+# Ignore node_modules and Angular build artifacts
+client/node_modules/
+client/dist/
+client/.angular/
+
+# Ignore .NET build artifacts
+api/bin/
+api/obj/
+api/*.user
+api/*.suo
+api/*.userosscache
+api/*.sln.docstates
+
+# OS & editor junk
+**/.DS_Store
+**/Thumbs.db
+**/*.swp
+**/*.log
+**/*.tmp
+
+# VSCode & JetBrains
+.vscode/
+.idea/
+
+# Environment files (optional, sensitive)
+**/.env
+**/*.env
+**/appsettings.Development.json
