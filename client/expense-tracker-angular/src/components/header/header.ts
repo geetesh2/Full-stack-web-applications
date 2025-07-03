@@ -14,7 +14,6 @@ export class Header {
   @Output() newItemEvent = new EventEmitter<void>();
   loggedIn = false;
   toggleSideNav(){
-    console.log("in header");
     this.newItemEvent.emit();
   }
 }

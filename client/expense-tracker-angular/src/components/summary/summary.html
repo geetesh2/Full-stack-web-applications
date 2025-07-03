@@ -1,0 +1,33 @@
+<div class="summary-container">
+  <mat-card class="summary-card">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <div>
+      <h3>Total Expense</h3>
+      <p>₹{{ totalExpense }}</p>
+    </div>
+  </mat-card>
+
+  <mat-card class="summary-card">
+    <mat-icon>bar_chart</mat-icon>
+    <div>
+      <h3>Top Category</h3>
+      <p>{{ topCategory || '-' }}</p>
+    </div>
+  </mat-card>
+
+  <mat-card class="summary-card">
+    <mat-icon>receipt_long</mat-icon>
+    <div>
+      <h3>Total Entries</h3>
+      <p>{{ totalEntries }}</p>
+    </div>
+  </mat-card>
+
+  <mat-card class="summary-card">
+    <mat-icon>calendar_today</mat-icon>
+    <div>
+      <h3>Avg Daily Spend</h3>
+      <p>₹{{ averageDailySpend }}</p>
+    </div>
+  </mat-card>
+</div>
