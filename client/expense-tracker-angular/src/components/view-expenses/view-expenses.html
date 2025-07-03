@@ -1,0 +1,27 @@
+<ng-container *ngIf="expenses.length > 0; else noData">
+  <div id="expenses">
+    <mat-card *ngFor="let expense of expenses" class="expense-card">
+      <div class="card-header">
+        <mat-card-title>{{ expense.expenseType }}</mat-card-title>
+        <div class="icon-buttons">
+          <button mat-icon-button color="accent" (click)="onEdit(expense)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete(expense)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <mat-card-content>
+        <p><strong>Amount:</strong> ₹{{ expense.amount }}</p>
+        <p><strong>Description:</strong> {{ expense.description || '-' }}</p>
+        <p><strong>Date:</strong> {{ expense.date | date }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-container>
+
+<ng-template #noData>
+  <p>No expenses to show.</p>
+</ng-template>

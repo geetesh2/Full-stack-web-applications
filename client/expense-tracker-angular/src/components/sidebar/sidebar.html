@@ -1,0 +1,35 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <div class="nav-item" routerLinkActive="active">
+      <a routerLink="/home">
+        <mat-icon fontIcon="home"></mat-icon>
+        <span>Home</span>
+      </a>
+    </div>
+
+    <div class="nav-item" routerLinkActive="active">
+      <a routerLink="/add-expense">
+        <mat-icon fontIcon="add"></mat-icon>
+        <span>Add Expenses</span>
+      </a>
+    </div>
+
+    <div class="nav-item" routerLinkActive="active">
+      <a routerLink="/view-expenses">
+        <mat-icon fontIcon="folder_open"></mat-icon>
+        <span>View Expenses</span>
+      </a>
+    </div>
+
+    <div class="nav-item" routerLinkActive="active">
+      <a routerLink="/charts">
+        <mat-icon fontIcon="analytics"></mat-icon>
+        <span>Charts</span>
+      </a>
+    </div>
+  </div>
+</mat-drawer-container>
