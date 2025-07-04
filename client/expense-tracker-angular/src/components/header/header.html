@@ -9,12 +9,8 @@
     <mat-icon>account_box</mat-icon>
   </button>
 
-  @if(!loggedIn){
-  <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>login</mat-icon>
-  </button>
-  }@else{
-  <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  @if(loggedIn){
+  <button matIconButton (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>}
 </mat-toolbar>
