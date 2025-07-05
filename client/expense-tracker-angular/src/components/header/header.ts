@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -12,11 +12,19 @@ import { Router } from '@angular/router';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router)
   @Output() newItemEvent = new EventEmitter<void>();
-  loggedIn = true;
+  loggedIn = false;
+
+  ngOnInit(): void {
+    this.authService.authenticator$.subscribe((value) => {
+      this.loggedIn = value;
+    })
+  }
+
+  
   toggleSideNav(){
     this.newItemEvent.emit();
   }
