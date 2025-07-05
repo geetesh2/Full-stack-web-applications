@@ -1,6 +1,24 @@
-<ng-container *ngIf="expenses.length > 0; else noData">
+<!-- Filter Section -->
+<div class="filter-bar">
+  <label for="month">Month:</label>
+  <select id="month" [(ngModel)]="selectedMonth" (change)="applyFilter()">
+    <option [value]="''">All</option>
+    <option *ngFor="let m of months; let i = index" [value]="i + 1">
+      {{ m }}
+    </option>
+  </select>
+
+  <label for="year">Year:</label>
+  <select id="year" [(ngModel)]="selectedYear" (change)="applyFilter()">
+    <option [value]="''">All</option>
+    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+  </select>
+</div>
+
+<!-- Expense Cards -->
+<ng-container *ngIf="filteredExpenses.length > 0; else noData">
   <div id="expenses">
-    <mat-card *ngFor="let expense of expenses" class="expense-card">
+    <mat-card *ngFor="let expense of filteredExpenses" class="expense-card">
       <div class="card-header">
         <mat-card-title>{{ expense.expenseType }}</mat-card-title>
         <div class="icon-buttons">
@@ -22,6 +40,7 @@
   </div>
 </ng-container>
 
+<!-- No Data Template -->
 <ng-template #noData>
-  <p>No expenses to show.</p>
+  <p class="no-data">No expenses to show.</p>
 </ng-template>

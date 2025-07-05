@@ -28,6 +28,8 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateSummary() {
+    this.totalEntries = 0;
+    this.totalExpense = 0;
     const categoryTotals: { [key: string]: number } = {};
     const datesSet = new Set<string>();
 

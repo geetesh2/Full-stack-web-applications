@@ -7,7 +7,6 @@ import {
   Legend,
   Title
 } from 'chart.js';
-import { ExpenseDto } from '../../models/expense.model';
 import { ExpenseService } from '../../services/expense-service';
 import { Expense } from '../../models/expenseResponse.model';
 
