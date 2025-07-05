@@ -9,4 +9,6 @@ public class User
     public string Username { get; set; }
     [Required]
     public string HashedPassword { get; set; }
+    
+    public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
 }

@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Expense } from '../../models/expense.model';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { ExpenseDto } from '../../models/expense.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatCard, MatCardContent, MatCardTitle,  } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { ExpenseService } from '../../services/expense-service';
+import { Expense } from '../../models/expenseResponse.model';
 
 @Component({
   selector: 'app-view-expenses',
@@ -11,34 +13,13 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './view-expenses.css'
 })
 export class ViewExpenses implements OnInit {
-    @Input() expenses: Expense[] = []; // Ideally use a model/interface
+     expenses: Expense[] = []; // Ideally use a model/interface
+        private expenseService = inject(ExpenseService);
+
     ngOnInit(): void {
-  this.expenses = [
-    {
-      expenseType: 'Food',
-      amount: 250,
-      description: 'Lunch at cafe',
-      date: new Date('2025-06-30')
-    },
-    {
-      expenseType: 'Travel',
-      amount: 1200,
-      description: 'Cab to airport',
-      date: new Date('2025-06-28')
-    },
-    {
-      expenseType: 'Shopping',
-      amount: 4000,
-      description: 'Bought a new smartwatch',
-      date: new Date('2025-06-25')
-    },
-    {
-      expenseType: 'Others',
-      amount: 300,
-      description: 'Gift for friend',
-      date: new Date('2025-06-20')
-    }
-  ];
+  this.expenseService.expenses$.subscribe(expenses => {
+    this.expenses = expenses;
+  })
 }
 
 onEdit(expense: Expense) {

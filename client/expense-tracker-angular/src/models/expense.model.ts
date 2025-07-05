@@ -1,4 +1,4 @@
-export interface Expense {
+export interface ExpenseDto {
   expenseType: string;
   amount: number;
   description?: string;

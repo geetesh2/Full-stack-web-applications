@@ -1,15 +1,22 @@
 <mat-toolbar>
+
+  @if(loggedIn){
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
     (click)="toggleSideNav()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Expense Tracer</span>
+}
+
+
+  <span>Expense Traker</span>
   <span class="example-spacer"></span>
+ 
+
+  @if(loggedIn){
   <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>account_box</mat-icon>
   </button>
 
-  @if(loggedIn){
   <button matIconButton (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>}

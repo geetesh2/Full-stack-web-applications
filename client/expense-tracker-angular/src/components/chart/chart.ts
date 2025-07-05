@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, OnInit, inject } from '@angular/core';
 import {
   Chart,
   DoughnutController,
@@ -7,65 +7,18 @@ import {
   Legend,
   Title
 } from 'chart.js';
-import { Expense } from '../../models/expense.model';
+import { ExpenseDto } from '../../models/expense.model';
+import { ExpenseService } from '../../services/expense-service';
+import { Expense } from '../../models/expenseResponse.model';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.html',
   styleUrls: ['./chart.css']
 })
-export class ChartComponent implements AfterViewInit, OnChanges {
+export class ChartComponent implements AfterViewInit, OnChanges, OnInit{
 
-  expenses: Expense[] = [
-    {
-      expenseType: 'Food',
-      amount: 250,
-      description: 'Lunch at cafe',
-      date: new Date('2025-07-01')
-    },
-    {
-      expenseType: 'Travel',
-      amount: 800,
-      description: 'Cab fare',
-      date: new Date('2025-07-01')
-    },
-    {
-      expenseType: 'Shopping',
-      amount: 1200,
-      description: 'New shoes',
-      date: new Date('2025-06-30')
-    },
-    {
-      expenseType: 'Food',
-      amount: 300,
-      description: 'Groceries',
-      date: new Date('2025-06-29')
-    },
-    {
-      expenseType: 'Others',
-      amount: 150,
-      description: 'Stationery',
-      date: new Date('2025-06-28')
-    },
-    {
-      expenseType: 'Travel',
-      amount: 400,
-      description: 'Metro card recharge',
-      date: new Date('2025-06-27')
-    },
-    {
-      expenseType: 'Shopping',
-      amount: 2200,
-      description: 'Clothing',
-      date: new Date('2025-06-26')
-    },
-    {
-      expenseType: 'Food',
-      amount: 100,
-      description: 'Snacks',
-      date: new Date('2025-06-25')
-    }
-  ];
+  expenses: Expense[] = [];
   @ViewChild('myChart') myChartRef!: ElementRef;
   chart: any;
 
@@ -77,6 +30,18 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       Legend,
       Title
     );
+  }
+    private expenseService = inject(ExpenseService);
+
+  ngOnInit(): void {
+    // console.log("hi");
+    this.expenseService.getMyExpenses();
+
+    this.expenseService.expenses$.subscribe((expenses) => {
+      // console.log(expenses);
+      this.expenses = [...expenses];
+      this.updateChart();
+    })
   }
 
   ngAfterViewInit(): void {
@@ -94,7 +59,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   groupExpensesByType() {
     const grouped: { [key: string]: number } = {};
     for (const exp of this.expenses) {
-      grouped[exp.expenseType] = (grouped[exp.expenseType] || 0) + exp.amount;
+      grouped[exp.expenseType!] = (grouped[exp.expenseType!] || 0) + exp.amount;
     }
 
     return {

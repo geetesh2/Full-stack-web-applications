@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { ExpenseService } from '../../services/expense-service';
+import { ExpenseDto } from '../../models/expense.model';
 
 @Component({
   selector: 'app-expense-form',
@@ -20,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ExpenseForm {
   myForm: FormGroup;
+  private expenseService = inject(ExpenseService);
 
   constructor(private fb: FormBuilder) {
     this.myForm = this.fb.group({
@@ -32,8 +35,11 @@ export class ExpenseForm {
 
   onSubmit() {
     if (this.myForm.valid) {
-      const expense = this.myForm.value;
+      const expense:ExpenseDto = this.myForm.value;
       console.log('Submitted Expense:', expense);
+      this.expenseService.createExpense(expense).subscribe((value) => {
+      console.log(value);
+    });
     }
   }
 }

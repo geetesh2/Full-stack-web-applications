@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Expense } from '../../models/expense.model';
+import { ExpenseDto } from '../../models/expense.model';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 
@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
   imports:[MatCard, MatIcon]
 })
 export class SummaryComponent implements OnInit {
-  expenses: Expense[] = [
+  expenses: ExpenseDto[] = [
     { expenseType: 'Food', amount: 250, description: 'Lunch', date: new Date('2025-07-01') },
     { expenseType: 'Travel', amount: 800, description: 'Cab', date: new Date('2025-07-01') },
     { expenseType: 'Shopping', amount: 1200, description: 'Shoes', date: new Date('2025-06-30') },

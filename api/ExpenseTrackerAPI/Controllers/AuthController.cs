@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(UserDto request)
+    public async Task<IActionResult> Register([FromBody] UserDto request)
     {
         var userExists = await _context.Users.AnyAsync(u => u.Username == request.Username);
         if (userExists)
@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(UserDto request)
+    public async Task<IActionResult> Login([FromBody] UserDto request)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.HashedPassword))
