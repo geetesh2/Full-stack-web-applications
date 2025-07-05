@@ -72,24 +72,25 @@ public class ExpenseController : ControllerBase
 
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Put(Guid id, [FromBody] Expense expense)
+    public async Task<IActionResult> Put(Guid id, [FromBody] ExpenseDto expense)
     {
         var userId = GetUserId();
 
-        if (id != expense.Id)
-            return BadRequest("ID mismatch");
-
         var exists = await _context.Expenses
-            .AnyAsync(e => e.Id == id && e.UserId == userId);
+            .FirstOrDefaultAsync(e => e.Id == id && e.UserId == userId);
 
-        if (!exists)
+        if (exists  == null)
             return NotFound();
 
-        expense.UserId = userId;
-        _context.Entry(expense).State = EntityState.Modified;
+        exists.Date = DateTime.SpecifyKind(expense.Date,  DateTimeKind.Utc);
+        exists.Description = expense.Description;
+        exists.ExpenseType = expense.ExpenseType;
+        exists.Amount = expense.Amount;
+
+        _context.Entry(exists).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok(exists);
     }
 
     [HttpDelete("{id:guid}")]

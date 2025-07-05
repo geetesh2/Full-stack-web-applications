@@ -11,4 +11,5 @@ export const routes: Routes = [
   { path: 'home', component: ChartComponent, canActivate:[authGuard] },
   { path: 'add-expense', component: ExpenseForm, canActivate: [authGuard] },
   { path: 'view-expenses', component: ViewExpenses, canActivate: [authGuard] },
+  { path: 'edit-expense/:id', component: ExpenseForm, canActivate: [authGuard] },
 ];
