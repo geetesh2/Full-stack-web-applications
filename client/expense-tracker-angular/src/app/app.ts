@@ -6,16 +6,16 @@ import { ExpenseForm } from '../components/expense-form/expense-form';
 import { Sidebar } from '../components/sidebar/sidebar';
 import { SummaryComponent } from '../components/summary/summary';
 import { Footer } from '../components/footer/footer';
-import { ExpenseService } from '../services/expense-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, ChartComponent, ExpenseForm, Sidebar, SummaryComponent, Footer],
+  imports: [RouterOutlet, Header, ChartComponent, ExpenseForm, Sidebar, SummaryComponent, Footer, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 
-export class App  {
+export class App{
   showSideNav = false;
   toggleSideNav(){
     this.showSideNav = !this.showSideNav;

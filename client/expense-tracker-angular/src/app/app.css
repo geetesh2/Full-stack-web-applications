@@ -1,22 +1,38 @@
-html{
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* disables scroll */
+    font-family: sans-serif;
     background-color: black;
-}
-
-.main{
+  }
+  
+  .app-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  /* Main area: sidebar + router-outlet */
+  .main {
     display: flex;
     flex-direction: row;
+    height: 80vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  /* Router outlet wrapper */
+  .router-outlet-wrapper {
     width: 100%;
-    height: 100%;
-    background-color:black;
-}
-
-app-chart{
-    width: 70%;
-    /* margin: 5%; */
-}
-
-app-expense-form{
-    width: 27%;
-    margin-left: 3%;
-    height: 100%;
-}
+    overflow: auto; /* optional scroll inside content */
+    background-color: #111;
+    color: white;
+  }
+  
+  /* Footer */
+  .footer {
+    height: 10vh;
+  }
+  

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ExpenseDto } from '../../models/expense.model';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { Expense } from '../../models/expenseResponse.model';
+import { ExpenseService } from '../../services/expense-service';
 
 @Component({
   selector: 'app-summary',
@@ -11,24 +13,18 @@ import { MatIcon } from '@angular/material/icon';
   imports:[MatCard, MatIcon]
 })
 export class SummaryComponent implements OnInit {
-  expenses: ExpenseDto[] = [
-    { expenseType: 'Food', amount: 250, description: 'Lunch', date: new Date('2025-07-01') },
-    { expenseType: 'Travel', amount: 800, description: 'Cab', date: new Date('2025-07-01') },
-    { expenseType: 'Shopping', amount: 1200, description: 'Shoes', date: new Date('2025-06-30') },
-    { expenseType: 'Food', amount: 300, description: 'Grocery', date: new Date('2025-06-29') },
-    { expenseType: 'Others', amount: 150, description: 'Pen', date: new Date('2025-06-28') },
-    { expenseType: 'Travel', amount: 400, description: 'Metro', date: new Date('2025-06-27') },
-    { expenseType: 'Shopping', amount: 2200, description: 'Clothes', date: new Date('2025-06-26') },
-    { expenseType: 'Food', amount: 100, description: 'Snacks', date: new Date('2025-06-25') }
-  ];
-
+  expenses: Expense[] = [ ];
+  private expenseService: ExpenseService = inject(ExpenseService);
   totalExpense = 0;
   topCategory = '';
   totalEntries = 0;
   averageDailySpend = 0;
 
   ngOnInit(): void {
-    this.calculateSummary();
+    this.expenseService.expenses$.subscribe((val) => {
+      this.expenses = val;
+      this.calculateSummary();
+    })
   }
 
   calculateSummary() {
@@ -39,7 +35,7 @@ export class SummaryComponent implements OnInit {
       this.totalExpense += exp.amount;
       this.totalEntries += 1;
 
-      categoryTotals[exp.expenseType] = (categoryTotals[exp.expenseType] || 0) + exp.amount;
+      categoryTotals[exp.expenseType!] = (categoryTotals[exp.expenseType!] || 0) + exp.amount;
 
       const dateStr = new Date(exp.date).toDateString();
       datesSet.add(dateStr);

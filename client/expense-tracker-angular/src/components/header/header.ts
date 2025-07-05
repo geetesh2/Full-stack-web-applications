@@ -22,6 +22,11 @@ export class Header implements OnInit {
     this.authService.authenticator$.subscribe((value) => {
       this.loggedIn = value;
     })
+
+    if(this.authService.loginIfAuthenticated())
+    {
+       this.router.navigate(['/home']);
+    }
   }
 
   

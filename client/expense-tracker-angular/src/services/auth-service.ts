@@ -6,30 +6,39 @@ import { BehaviorSubject, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:5225/api/auth'; // Adjust as needed
+  private apiUrl = 'http://localhost:5225/api/auth';
 
-  authenticator$ :BehaviorSubject<boolean> = new BehaviorSubject(false);
-  constructor(private http: HttpClient) { }
+  authenticator$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  constructor(private http: HttpClient) {}
 
-  login( User:user){
-    return this.http.post<{token: string}>(`${this.apiUrl}/login`, User).pipe(tap((response) => {
-          localStorage.setItem('token', response.token);
-          this.authenticator$.next(true);
-        }))
+  login(User: user) {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, User).pipe(
+      tap((response) => {
+        localStorage.setItem('token', response.token);
+        this.authenticator$.next(true);
+      })
+    );
   }
 
-  singUp(User:user){
-   return this.http.post(`${this.apiUrl}/register`, User);
+  singUp(User: user) {
+    return this.http.post(`${this.apiUrl}/register`, User);
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('token');
     this.authenticator$.next(false);
   }
 
-
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  loginIfAuthenticated(): boolean {
+    if (this.getToken()) {
+      this.authenticator$.next(true);
+      return true;
+    }
+    return false;
   }
 
   getToken(): string | null {

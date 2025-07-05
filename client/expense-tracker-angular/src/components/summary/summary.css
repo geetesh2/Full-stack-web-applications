@@ -1,8 +1,10 @@
 .summary-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  padding: 20px;
+  gap: 1rem;
+  padding: 1rem;
+  height: 100%; /* Fill available vertical space */
+  box-sizing: border-box;
 }
 
 .summary-card {
@@ -15,10 +17,22 @@
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
   transition: transform 0.2s;
+  min-height: 100px;
 }
 
 .summary-card:hover {
   transform: translateY(-5px);
+}
+
+.summary-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.summary-card p {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 mat-icon {
