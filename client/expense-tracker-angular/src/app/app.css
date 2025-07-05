@@ -1,38 +1,63 @@
+/* General HTML & Body setup */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden; /* disables scroll */
-    font-family: sans-serif;
-    background-color: black;
-  }
-  
-  .app-wrapper {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  
-  /* Main area: sidebar + router-outlet */
-  .main {
-    display: flex;
-    flex-direction: row;
-    height: 80vh;
-    width: 100vw;
-    overflow: hidden;
-  }
-  
-  /* Router outlet wrapper */
-  .router-outlet-wrapper {
-    width: 100%;
-    overflow: auto; /* optional scroll inside content */
-    background-color: #111;
-    color: white;
-  }
-  
-  /* Footer */
-  .footer {
-    height: 10vh;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; /* disable full-page scroll */
+  font-family: sans-serif;
+  background-color: black;
+}
+
+/* App container */
+.app-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Main content area */
+.main {
+  position: relative;
+  flex: 1;
+  width: 100vw;
+  display: block;
+  overflow: hidden;
+}
+
+/* Sidebar - overlay style */
+app-sidebar {
+  position: fixed;
+  top: 10vh; /* below header */
+  left: 0;
+  width: 14vw;
+  height: 80vh; /* matches main height */
+  background-color: #222;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Router outlet wrapper */
+.router-outlet-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #111;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: backdrop when sidebar is open */
+.sidebar-backdrop {
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  width: 100vw;
+  height: 80vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+}
