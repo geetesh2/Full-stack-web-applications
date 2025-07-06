@@ -28,7 +28,7 @@ html, body {
 /* Sidebar - overlay style */
 app-sidebar {
   position: fixed;
-  top: 10vh; /* below header */
+  top: 7vh; /* below header */
   left: 0;
   width: 14vw;
   height: 80vh; /* matches main height */
