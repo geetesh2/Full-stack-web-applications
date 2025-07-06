@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OnlineConnection")));
 
 var key = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthentication(options =>
@@ -52,6 +52,12 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // This applies any pending migrations
+}
+
 
 app.UseHttpsRedirection();
 
