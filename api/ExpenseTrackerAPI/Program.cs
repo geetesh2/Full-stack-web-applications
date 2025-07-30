@@ -1,5 +1,7 @@
 using System.Text;
 using ExpenseTrackerAPI.Context;
+using ExpenseTrackerAPI.Interfaces;
+using ExpenseTrackerAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +16,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OnlineConnection")));
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 var key = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthentication(options =>

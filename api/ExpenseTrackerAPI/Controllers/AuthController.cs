@@ -1,12 +1,6 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using ExpenseTrackerAPI.Context;
 using ExpenseTrackerAPI.DTOs;
-using ExpenseTrackerAPI.Models;
+using ExpenseTrackerAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ExpenseTrackerAPI.Controllers;
 
@@ -14,66 +8,30 @@ namespace ExpenseTrackerAPI.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly AppDbContext _context;
-    private readonly IConfiguration _config;
+    private readonly IAuthService _authService;
 
-    public AuthController(AppDbContext context, IConfiguration config)
+    public AuthController(IAuthService authService)
     {
-        _context = context;
-        _config = config;
+        _authService = authService;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserDto request)
     {
-        var userExists = await _context.Users.AnyAsync(u => u.Username == request.Username);
-        if (userExists)
-            return BadRequest("User already exists");
+        var result = await _authService.RegisterAsync(request);
 
-        var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        if (!result.Success) return BadRequest(result.Message);
 
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Username = request.Username,
-            HashedPassword = passwordHash
-        };
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-
-        return Ok("User registered successfully");
+        return Ok(result.Message);
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserDto request)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.HashedPassword))
-            return Unauthorized("Invalid credentials");
+        var token = await _authService.LoginAsync(request);
 
-        var token = GenerateJwtToken(user);
+        if (token == null) return Unauthorized("Invalid credentials");
+
         return Ok(new { token });
-    }
-
-    private string GenerateJwtToken(User user)
-    {
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.UserData, user.Username)
-        };
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            _config["Jwt:Issuer"],
-            _config["Jwt:Audience"],
-            claims,
-            expires: DateTime.Now.AddDays(1),
-            signingCredentials: creds);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
