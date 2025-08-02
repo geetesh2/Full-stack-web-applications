@@ -24,7 +24,7 @@ public class AuthService : IAuthService
 
     public async Task<(bool Success, string Message)> RegisterAsync(UserDto request)
     {
-        var userExists = await _context.Users.AnyAsync(u => u.Username == request.Username);
+        var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email);
         if (userExists)
             return (false, "User already exists");
 
@@ -33,7 +33,7 @@ public class AuthService : IAuthService
         var user = new User
         {
             Id = Guid.NewGuid(),
-            Username = request.Username,
+            Email = request.Email,
             HashedPassword = passwordHash
         };
 
@@ -45,7 +45,7 @@ public class AuthService : IAuthService
 
     public async Task<string?> LoginAsync(UserDto request)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
         if (user == null ||
             !BCrypt.Net.BCrypt.Verify(request.Password,
                 user.HashedPassword)) return null; 
@@ -59,7 +59,7 @@ public class AuthService : IAuthService
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.UserData, user.Username)
+            new Claim(ClaimTypes.UserData, user.Email)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

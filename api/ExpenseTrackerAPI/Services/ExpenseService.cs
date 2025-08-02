@@ -33,7 +33,7 @@ public class ExpenseService : IExpenseService
         var expense = new Expense
         {
             Id = Guid.NewGuid(),
-            ExpenseType = dto.ExpenseType,
+            CategoryId = dto.CategoryId,
             Amount = dto.Amount,
             Description = dto.Description,
             Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc),
@@ -56,7 +56,7 @@ public class ExpenseService : IExpenseService
 
         existingExpense.Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc);
         existingExpense.Description = dto.Description;
-        existingExpense.ExpenseType = dto.ExpenseType;
+        existingExpense.CategoryId = dto.CategoryId;
         existingExpense.Amount = dto.Amount;
         
         await _context.SaveChangesAsync();
