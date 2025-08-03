@@ -34,7 +34,8 @@ public class AuthService : IAuthService
         {
             Id = Guid.NewGuid(),
             Email = request.Email,
-            HashedPassword = passwordHash
+            HashedPassword = passwordHash,
+            CreatedAt  = DateTime.UtcNow,
         };
 
         _context.Users.Add(user);

@@ -18,7 +18,7 @@ public class ExpenseService : IExpenseService
     public async Task<IEnumerable<Expense>> GetUserExpensesAsync(Guid userId)
     {
         return await _context.Expenses
-            .Where(e => e.UserId == userId)
+            .Where(e => e.UserId == userId).Include(e => e.Category)
             .ToListAsync();
     }
 

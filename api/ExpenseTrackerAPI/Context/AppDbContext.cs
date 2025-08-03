@@ -16,6 +16,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
 
     public DbSet<Category> Categories { get; set; }
+    
+    public DbSet<Budget> Budgets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,5 +41,15 @@ public class AppDbContext : DbContext
             new Category { Id = Guid.Parse("99999999-9999-9999-9999-999999999999"), Name = "Fuel" },
             new Category { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), Name = "Others" }
         );
+        
+        modelBuilder.Entity<Budget>()
+            .HasOne(b => b.User)
+            .WithMany()
+            .HasForeignKey(b => b.UserId);
+
+        modelBuilder.Entity<Budget>()
+            .HasOne(b => b.Category)
+            .WithMany()
+            .HasForeignKey(b => b.CategoryId);
     }
 }
