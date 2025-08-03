@@ -1,5 +1,3 @@
-using ExpenseTrackerAPI.Models;
-
 namespace ExpenseTrackerAPI.DTOs;
 
 public class ExpenseDto

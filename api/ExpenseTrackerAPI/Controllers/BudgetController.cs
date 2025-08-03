@@ -9,23 +9,15 @@ namespace ExpenseTrackerAPI.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class BudgetController : ControllerBase
+public class BudgetController(IBudgetService budgetService) : ControllerBase
 {
-    private readonly IBudgetService _budgetService;
-
-    public BudgetController(IBudgetService budgetService)
-    {
-        _budgetService = budgetService;
-    }
-
-    private Guid GetUserId() =>
-        Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private Guid GetUserId() => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpPost]
     public async Task<IActionResult> CreateBudget([FromBody] BudgetDto dto)
     {
         var userId = GetUserId();
-        var budget = await _budgetService.CreateBudgetAsync(dto, userId);
+        var budget = await budgetService.CreateBudgetAsync(dto, userId);
         return Ok(new { message = "Budget added successfully", data = budget });
     }
 
@@ -33,7 +25,7 @@ public class BudgetController : ControllerBase
     public async Task<IActionResult> GetMonthlyBudgets([FromQuery] int month, [FromQuery] int year)
     {
         var userId = GetUserId();
-        var budgets = await _budgetService.GetBudgetsAsync(userId, month, year);
+        var budgets = await budgetService.GetBudgetsAsync(userId, month, year);
         return Ok(new { data = budgets });
     }
 }

@@ -1,9 +1,5 @@
 using ExpenseTrackerAPI.Models;
 using Microsoft.EntityFrameworkCore;
-// Required for DbContext, DbSet, DbContextOptions
-
-// Assuming Expense and UserDto are inside a Models folder/namespace
-
 namespace ExpenseTrackerAPI.Context;
 
 public class AppDbContext : DbContext
@@ -28,7 +24,17 @@ public class AppDbContext : DbContext
             .WithMany(u => u.Expenses)
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade); // Optional: if user is deleted, delete their expenses
+        
+        modelBuilder.Entity<Budget>()
+            .HasOne(b => b.User)
+            .WithMany()
+            .HasForeignKey(b => b.UserId);
 
+        modelBuilder.Entity<Budget>()
+            .HasOne(b => b.Category)
+            .WithMany()
+            .HasForeignKey(b => b.CategoryId);
+        
         modelBuilder.Entity<Category>().HasData(
             new Category { Id = Guid.Parse("11111111-1111-1111-1111-111111111111"), Name = "Food" },
             new Category { Id = Guid.Parse("22222222-2222-2222-2222-222222222222"), Name = "Travel" },
@@ -41,15 +47,5 @@ public class AppDbContext : DbContext
             new Category { Id = Guid.Parse("99999999-9999-9999-9999-999999999999"), Name = "Fuel" },
             new Category { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), Name = "Others" }
         );
-        
-        modelBuilder.Entity<Budget>()
-            .HasOne(b => b.User)
-            .WithMany()
-            .HasForeignKey(b => b.UserId);
-
-        modelBuilder.Entity<Budget>()
-            .HasOne(b => b.Category)
-            .WithMany()
-            .HasForeignKey(b => b.CategoryId);
     }
 }

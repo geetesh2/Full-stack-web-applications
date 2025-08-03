@@ -9,28 +9,24 @@ namespace ExpenseTrackerAPI.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class ExpenseController : ControllerBase
+public class ExpenseController(IExpenseService expenseService) : ControllerBase
 {
-    private readonly IExpenseService _expenseService;
-
-    public ExpenseController(IExpenseService expenseService)
+    private Guid GetUserId()
     {
-        _expenseService = expenseService;
+        return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
-
-    private Guid GetUserId() => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult> Get(Guid id)
     {
-        var expense = await _expenseService.GetExpenseByIdAsync(id, GetUserId());
+        var expense = await expenseService.GetExpenseByIdAsync(id, GetUserId());
         return expense == null ? NotFound() : Ok(expense);
     }
 
     [HttpGet("me")]
     public async Task<ActionResult> GetMyExpenses()
     {
-        var expenses = await _expenseService.GetUserExpensesAsync(GetUserId());
+        var expenses = await expenseService.GetUserExpensesAsync(GetUserId());
         return Ok(expenses);
     }
 
@@ -38,21 +34,21 @@ public class ExpenseController : ControllerBase
     public async Task<IActionResult> Post([FromBody] ExpenseDto dto)
     {
         Console.WriteLine(dto);
-        var newExpense = await _expenseService.CreateExpenseAsync(dto, GetUserId());
+        var newExpense = await expenseService.CreateExpenseAsync(dto, GetUserId());
         return Ok(newExpense);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put(Guid id, [FromBody] ExpenseDto dto)
     {
-        var updatedExpense = await _expenseService.UpdateExpenseAsync(id, dto, GetUserId());
+        var updatedExpense = await expenseService.UpdateExpenseAsync(id, dto, GetUserId());
         return updatedExpense == null ? NotFound() : Ok(updatedExpense);
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var success = await _expenseService.DeleteExpenseAsync(id, GetUserId());
+        var success = await expenseService.DeleteExpenseAsync(id, GetUserId());
         return success ? NoContent() : NotFound();
     }
 }

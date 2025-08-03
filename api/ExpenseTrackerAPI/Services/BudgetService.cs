@@ -1,6 +1,5 @@
 using ExpenseTrackerAPI.Context;
 using ExpenseTrackerAPI.DTOs;
-using ExpenseTrackerAPI.Interfaces;
 using ExpenseTrackerAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +23,6 @@ public class BudgetService : IBudgetService
             Month = dto.Month,
             Year = dto.Year
         };
-
         _context.Budgets.Add(budget);
         await _context.SaveChangesAsync();
         return budget;
@@ -32,18 +30,12 @@ public class BudgetService : IBudgetService
 
     public async Task<IEnumerable<Budget>> GetBudgetsAsync(Guid userId, int month, int year)
     {
-        return await _context.Budgets
-            .Include(b => b.Category)
-            .Where(b => b.UserId == userId && b.Month == month && b.Year == year)
-            .ToListAsync();
-    }
-    
-    public async Task<IEnumerable<Budget>> GetUserBudgetsAsync(Guid userId)
-    {
-        return await _context.Budgets
-            .Include(b => b.Category)
-            .Where(b => b.UserId == userId)
-            .ToListAsync();
+        return await _context.Budgets.Include(b => b.Category)
+            .Where(b => b.UserId == userId && b.Month == month && b.Year == year).ToListAsync();
     }
 
+    public async Task<IEnumerable<Budget>> GetUserBudgetsAsync(Guid userId)
+    {
+        return await _context.Budgets.Include(b => b.Category).Where(b => b.UserId == userId).ToListAsync();
+    }
 }
