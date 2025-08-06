@@ -7,7 +7,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 })
 export class AuthService {
   private apiUrl =
-    'https://full-stack-web-applications-2.onrender.com/api/auth';
+    ' http://localhost:5225/api/auth';
   authenticator$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(private http: HttpClient) {}
 

@@ -9,8 +9,8 @@ import { Expense } from '../models/expenseResponse.model';
 })
 export class ExpenseService {
   private baseUrl =
-    'https://full-stack-web-applications-2.onrender.com/api/expense';
-  // 'http://localhost:5225/api/expense'; // Adjust port if needed
+    // 'https://full-stack-web-applications-2.onrender.com/api/expense';
+  'http://localhost:5225/api/expense'; // Adjust port if needed
 
   private expensesSubject = new BehaviorSubject<Expense[]>([]);
   expenses$ = this.expensesSubject.asObservable();

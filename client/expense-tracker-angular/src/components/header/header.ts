@@ -1,5 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -74,18 +76,31 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class HeaderComponent {
-  @Input() loggedIn: boolean = true;
+export class HeaderComponent implements OnInit {
+  loggedIn: boolean = true;
+  private authService: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
+
+  ngOnInit(): void {
+    this.authService.authenticator$.subscribe((val)=>{
+      if(val == true){
+        this.loggedIn = true;
+      }else{
+        this.loggedIn = false;
+      }
+    })
+  }
 
   @Output() menuToggled = new EventEmitter<void>();
 
-  @Output() loggedOut = new EventEmitter<void>();
+  loggedOut = new EventEmitter<void>();
 
   toggleSideNav(): void {
     this.menuToggled.emit();
   }
 
   logout(): void {
-    this.loggedOut.emit();
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }
