@@ -219,11 +219,11 @@ export class ViewExpenses implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.populateYears();
-    this.expenseService.expenses$
-      .subscribe((expenses) => {
-        this.expenses = expenses;
-        this.applyFilter();
-      });
+    this.expenseService.expenses$.subscribe((expenses) => {
+      this.expenses = expenses;
+      console.log(this.expenses);
+      this.applyFilter();
+    });
   }
 
   ngOnDestroy(): void {

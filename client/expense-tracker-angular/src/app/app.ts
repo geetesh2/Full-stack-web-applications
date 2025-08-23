@@ -19,7 +19,6 @@ import { FooterComponent } from '../components/footer/footer';
     <div class="app-container" [class.sidebar-open]="showSideNav">
       <app-header
         class="app-header"
-        [loggedIn]="true"
         (menuToggled)="toggleSideNav()"
       >
       </app-header>
