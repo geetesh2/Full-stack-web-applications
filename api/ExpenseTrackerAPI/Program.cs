@@ -1,4 +1,5 @@
 using System.Text;
+using AspNetCoreRateLimit;
 using ExpenseTrackerAPI.Context;
 using ExpenseTrackerAPI.Interfaces;
 using ExpenseTrackerAPI.Services;
@@ -33,7 +34,7 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "Enter 'Bearer' followed by your JWT. Example: **Bearer eyJhbGciOi...**"
     });
-
+    
     // Apply to all operations
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -51,6 +52,32 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Rate limiting configuration
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(options =>
+{
+    options.EnableEndpointRateLimiting = true;
+    options.StackBlockedRequests = false;
+    options.HttpStatusCode = 429;
+    options.RealIpHeader = "X-Real-IP";
+    options.ClientIdHeader = "X-ClientId";
+    options.GeneralRules = new List<RateLimitRule>
+    {
+        // Single global rule for all endpoints
+        new RateLimitRule
+        {
+            Endpoint = "*",      // Matches every endpoint
+            Period = "1m",       // In a 1 minute period
+            Limit = 100,         // Allow up to 100 requests
+        }
+    };
+});
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+builder.Services.AddInMemoryRateLimiting();
+
 // DBContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -62,7 +89,7 @@ builder.Services.AddScoped<IAiInsightService, AiInsightService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddHttpClient();
 
-// ✅ JWT Auth
+// JWT Auth
 var key = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthentication(options =>
 {
@@ -109,6 +136,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseIpRateLimiting();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
