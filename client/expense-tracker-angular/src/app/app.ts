@@ -19,7 +19,6 @@ import { FooterComponent } from '../components/footer/footer';
     <div class="app-container" [class.sidebar-open]="showSideNav">
       <app-header
         class="app-header"
-        [loggedIn]="true"
         (menuToggled)="toggleSideNav()"
       >
       </app-header>
@@ -60,7 +59,7 @@ import { FooterComponent } from '../components/footer/footer';
         left: 0;
         width: 240px; /* A more standard sidebar width */
         height: calc(
-          100vh - 58px - 58px
+          94vh
         ); /* Full height minus header and footer */
         background-color: #1a1a1a;
         border-right: 1px solid #333;

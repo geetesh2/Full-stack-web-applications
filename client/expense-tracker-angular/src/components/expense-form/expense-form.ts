@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ExpenseService } from '../../services/expense-service';
 import { ExpenseDto } from '../../models/expense.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-expense-form',
@@ -56,11 +57,11 @@ import { ExpenseDto } from '../../models/expense.model';
                 <div class="form-floating mb-3">
                   <select
                     class="form-select"
-                    id="expenseType"
-                    formControlName="expenseType"
+                    id="categoryName"
+                    formControlName="categoryName"
                     [class.is-invalid]="
-                      myForm.get('expenseType')?.invalid &&
-                      myForm.get('expenseType')?.touched
+                      myForm.get('categoryName')?.invalid &&
+                      myForm.get('categoryName')?.touched
                     "
                   >
                     <option [ngValue]="null" disabled>Select a category</option>
@@ -252,7 +253,7 @@ export class ExpenseFormComponent implements OnInit {
   constructor() {
     this.myForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01)]],
-      expenseType: [null, Validators.required],
+      categoryName: [null, Validators.required],
       description: [''],
       date: ['', Validators.required],
     });
@@ -289,9 +290,7 @@ export class ExpenseFormComponent implements OnInit {
         ? this.expenseService.updateExpense(this.expenseId, expense)
         : this.expenseService.createExpense(expense);
 
-    // operation.subscribe({
-    //   next: () => this.router.navigate(['/home']),
-    //   error: (err) => console.error('Failed to save expense:', err),
-    // });
+    (operation  as Observable<any>).subscribe({
+      next: () => this.router.navigate(['/home']), });
   }
 }

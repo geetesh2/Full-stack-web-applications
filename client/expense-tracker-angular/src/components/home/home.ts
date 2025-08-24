@@ -340,65 +340,18 @@ export class HomeComponent implements OnInit {
   expenses: Expense[] = [];
   totalSpent = 0;
   highestExpense = 0;
-  budget = 150000; // Mock budget
+  budget = 10000; 
 
   private expenseService = inject(ExpenseService);
   private router = inject(Router);
 
   ngOnInit(): void {
-    // In a real app, you would fetch this data from your service
-    // this.expenseService.getExpenses().subscribe(data => { ... });
-    this.loadMockData();
+     this.expenseService.getMyExpenses();
+    this.expenseService.expenses$
+      .subscribe((expenses) => {
+        this.expenses = expenses;
+        this.calculateSummary();});
     this.calculateSummary();
-  }
-
-  loadMockData() {
-    this.expenses = [
-      {
-        id: '1',
-        userId: '1',
-        amount: 4500,
-        expenseType: 'Groceries',
-        description: 'Weekly Groceries',
-        date: new Date('2025-08-02'),
-      },
-      {
-        id: '2',
-        userId: '1',
-
-        amount: 1200,
-        expenseType: 'Entertainment',
-        description: 'Movie Tickets',
-        date: new Date('2025-08-02'),
-      },
-      {
-        id: '3',
-        userId: '1',
-
-        amount: 2800,
-        expenseType: 'Dining Out',
-        description: 'Dinner with friends',
-        date: new Date('2025-08-01'),
-      },
-      {
-        id: '4',
-        userId: '1',
-
-        amount: 25000,
-        expenseType: 'Rent',
-        description: 'Monthly Rent',
-        date: new Date('2025-08-01'),
-      },
-      {
-        id: '5',
-        userId: '1',
-
-        amount: 1000,
-        expenseType: 'Transport',
-        description: 'Fuel for bike',
-        date: new Date('2025-07-29'),
-      },
-    ];
   }
 
   calculateSummary() {

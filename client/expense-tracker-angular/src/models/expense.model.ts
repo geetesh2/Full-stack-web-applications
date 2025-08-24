@@ -1,5 +1,5 @@
 export interface ExpenseDto {
-  expenseType: string;
+  categoryName: string;
   amount: number;
   description?: string;
   date: Date;

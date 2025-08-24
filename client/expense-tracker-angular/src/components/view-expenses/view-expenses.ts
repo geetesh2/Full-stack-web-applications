@@ -219,6 +219,7 @@ export class ViewExpenses implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.populateYears();
+    this.expenseService.getMyExpenses();
     this.expenseService.expenses$
       .subscribe((expenses) => {
         this.expenses = expenses;
@@ -263,7 +264,6 @@ export class ViewExpenses implements OnInit, OnDestroy {
   }
 
   onDelete(expense: Expense): void {
-    // In a real app, you'd show a confirmation modal first
     this.expenseService.deleteExpense(expense.id).subscribe(() => {
       this.expenses = this.expenses.filter((e) => e.id !== expense.id);
       this.applyFilter();

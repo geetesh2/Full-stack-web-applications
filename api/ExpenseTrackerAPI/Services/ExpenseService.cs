@@ -27,10 +27,18 @@ public class ExpenseService : IExpenseService
 
     public async Task<Expense> CreateExpenseAsync(ExpenseDto dto, Guid userId)
     {
+        var category = await _context.Categories
+        .FirstOrDefaultAsync(c => c.Name.ToUpper() == dto.CategoryName.ToUpper());
+
+        if (category == null)
+        {
+            throw new ArgumentException($"Invalid category name provided: {dto.CategoryName}");
+        }
+
         var expense = new Expense
         {
             Id = Guid.NewGuid(),
-            CategoryId = dto.CategoryId,
+            CategoryId = category.Id,
             Amount = dto.Amount,
             Description = dto.Description,
             Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc),
@@ -43,11 +51,18 @@ public class ExpenseService : IExpenseService
 
     public async Task<Expense?> UpdateExpenseAsync(Guid expenseId, ExpenseDto dto, Guid userId)
     {
+        var category = await _context.Categories
+        .FirstOrDefaultAsync(c => c.Name.ToUpper() == dto.CategoryName.ToUpper());
+
+        if (category == null)
+        {
+            throw new ArgumentException($"Invalid category name provided: {dto.CategoryName}");
+        }
         var existingExpense = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == expenseId && e.UserId == userId);
         if (existingExpense == null) return null;
         existingExpense.Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc);
         existingExpense.Description = dto.Description;
-        existingExpense.CategoryId = dto.CategoryId;
+        existingExpense.CategoryId = category.Id;
         existingExpense.Amount = dto.Amount;
         await _context.SaveChangesAsync();
         return existingExpense;

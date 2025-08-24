@@ -3637,24 +3637,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/geetesh/.nuget/packages/": {}
+    "C:\\Users\\Geetesh\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/geetesh/Documents/Full stack web applications/api/ExpenseTrackerAPI/ExpenseTrackerAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Geetesh\\source\\repos\\geetesh2\\Full-stack-web-applications\\api\\ExpenseTrackerAPI\\ExpenseTrackerAPI.csproj",
       "projectName": "ExpenseTrackerAPI",
-      "projectPath": "/Users/geetesh/Documents/Full stack web applications/api/ExpenseTrackerAPI/ExpenseTrackerAPI.csproj",
-      "packagesPath": "/Users/geetesh/.nuget/packages/",
-      "outputPath": "/Users/geetesh/Documents/Full stack web applications/api/ExpenseTrackerAPI/obj/",
+      "projectPath": "C:\\Users\\Geetesh\\source\\repos\\geetesh2\\Full-stack-web-applications\\api\\ExpenseTrackerAPI\\ExpenseTrackerAPI.csproj",
+      "packagesPath": "C:\\Users\\Geetesh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Geetesh\\source\\repos\\geetesh2\\Full-stack-web-applications\\api\\ExpenseTrackerAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/geetesh/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Geetesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3733,7 +3740,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

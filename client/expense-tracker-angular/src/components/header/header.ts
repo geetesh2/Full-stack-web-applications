@@ -89,6 +89,8 @@ export class HeaderComponent implements OnInit {
         this.loggedIn = false;
       }
     })
+
+    
   }
 
   @Output() menuToggled = new EventEmitter<void>();

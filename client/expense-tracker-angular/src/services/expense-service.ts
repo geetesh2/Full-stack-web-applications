@@ -39,6 +39,7 @@ export class ExpenseService {
   }
 
   createExpense(expense: ExpenseDto): Observable<Expense> {
+    console.log('Creating expense:', expense);
     return this.http.post<Expense>(this.baseUrl, expense, {
       headers: this.getAuthHeaders(),
     });

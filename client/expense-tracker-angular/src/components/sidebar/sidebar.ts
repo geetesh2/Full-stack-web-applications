@@ -35,6 +35,16 @@ import { RouterModule } from '@angular/router';
             <span>View Expenses</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a
+            routerLink="/insights"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="fas fa-chart-line me-2"></i>
+            <span>View Insights</span>
+          </a>
+        </li>
       </ul>
       <hr />
       <div class="dropdown">
