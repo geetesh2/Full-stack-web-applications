@@ -1,0 +1,76 @@
+/* Ensures the component takes up the full block space */
+:host {
+  display: block;
+  height: 100%;
+  background-color: #0f0f0f; /* Dark background for the entire component view */
+}
+
+/* Container styling to manage scrolling */
+.container-fluid {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Styling for the primary action button */
+.btn-primary {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  border: none;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+
+/* Base card styling for the dark theme */
+.card {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 1rem;
+  color: #e0e0e0;
+}
+
+/* Specific styles for the budget cards */
+.budget-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.budget-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.budget-card .card-header {
+  background-color: #222;
+  border-bottom: 1px solid #333;
+}
+
+.budget-card .card-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Styling for the large amount display */
+.budget-card .limit-amount {
+  font-weight: 700;
+  color: #fff;
+  font-size: 2.25rem;
+}
+
+/* Styling for the small icon buttons (edit, delete) */
+.btn-icon {
+  color: #adb5bd;
+  background-color: transparent;
+  border: none;
+}
+
+.btn-icon:hover {
+  color: #fff;
+}
+
+/* Styling for the empty state message when no budgets are found */
+.empty-state {
+  padding: 4rem 0;
+  color: rgba(255, 255, 255, 0.3);
+}

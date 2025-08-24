@@ -21,11 +21,11 @@ public class BudgetController(IBudgetService budgetService) : ControllerBase
         return Ok(new { message = "Budget added successfully", data = budget });
     }
 
-    [HttpGet("monthly")]
-    public async Task<IActionResult> GetMonthlyBudgets([FromQuery] int month, [FromQuery] int year)
+    [HttpGet]
+    public async Task<IActionResult> GetMonthlyBudgets()
     {
         var userId = GetUserId();
-        var budgets = await budgetService.GetBudgetsAsync(userId, month, year);
+        var budgets = await budgetService.GetBudgetsAsync(userId);
         return Ok(new { data = budgets });
     }
 }

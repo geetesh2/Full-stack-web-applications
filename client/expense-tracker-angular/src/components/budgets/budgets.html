@@ -1,0 +1,64 @@
+<!-- Main container with padding -->
+<div class="container-fluid p-3 p-md-4">
+  <!-- Page Header: Title and Add New Button -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-0 text-white fw-bold">Monthly Budgets</h1>
+      <p class="text-white-50">Manage your spending goals for each category.</p>
+    </div>
+    <div>
+      <!-- Button to navigate to the budget creation form -->
+      <button class="btn btn-primary" (click)="navigateToAddBudget()">
+        <i class="fas fa-plus me-2"></i>Add New Budget
+      </button>
+    </div>
+  </div>
+
+  <!-- Conditional container: shows budget cards if they exist, otherwise shows the empty state -->
+  <ng-container >
+    <div class="row g-4">
+      <!-- Loop through each budget item and create a card -->
+      <div *ngFor="let budget of budgets" class="col-md-6 col-lg-4">
+        <div class="card budget-card h-100">
+          <!-- Card Header: Category Name and Action Buttons -->
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">{{ budget.CategoryName}}</h5>
+            <div>
+              <button class="btn btn-sm btn-icon" (click)="onEdit(budget)" title="Edit Budget">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn btn-sm btn-icon text-danger" (click)="onDelete(budget)" title="Delete Budget">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Card Body: Date and Budget Limit Amount -->
+          <div class="card-body">
+            <small class="text-white-50">{{ getMonthName(budget.Month) }} {{ budget.Year }}</small>
+            <h3 class="limit-amount mb-3 mt-2">
+              ₹{{ budget.LimitAmount }}
+            </h3>
+            <!-- Future enhancement: You can add a progress bar here -->
+            <!-- 
+            <div class="progress" style="height: 10px;">
+              <div class="progress-bar" role="progressbar" style="width: 60%;"></div>
+            </div>
+            <small class="text-white-50 mt-2 d-block">₹15,000 of ₹25,000 spent</small>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Empty State Template: Shown when the budgets array is empty -->
+  <ng-template #noData>
+    <div class="text-center empty-state">
+      <i class="fas fa-piggy-bank fa-4x mb-4"></i>
+      <h3 class="text-white fw-bold">No Budgets Set</h3>
+      <p class="text-white-50">
+        Click 'Add New Budget' to start tracking your spending goals.
+      </p>
+    </div>
+  </ng-template>
+</div>

@@ -9,38 +9,45 @@ import { RouterModule } from '@angular/router';
   template: `
     <div class="sidebar-container d-flex flex-column p-3">
       <ul class="nav nav-pills flex-column mb-auto">
+        <!-- Home Link -->
         <li class="nav-item">
           <a routerLink="/home" routerLinkActive="active" class="nav-link">
             <i class="fas fa-home me-2"></i>
             <span>Home</span>
           </a>
         </li>
+
+        <!-- Expense Links -->
         <li class="nav-item">
-          <a
-            routerLink="/add-expense"
-            routerLinkActive="active"
-            class="nav-link"
-          >
+          <a routerLink="/add-expense" routerLinkActive="active" class="nav-link">
             <i class="fas fa-plus-circle me-2"></i>
             <span>Add Expense</span>
           </a>
         </li>
         <li class="nav-item">
-          <a
-            routerLink="/view-expenses"
-            routerLinkActive="active"
-            class="nav-link"
-          >
+          <a routerLink="/view-expenses" routerLinkActive="active" class="nav-link">
             <i class="fas fa-folder-open me-2"></i>
             <span>View Expenses</span>
           </a>
         </li>
+
+        <!-- Budget Links (New) -->
         <li class="nav-item">
-          <a
-            routerLink="/insights"
-            routerLinkActive="active"
-            class="nav-link"
-          >
+          <a routerLink="/add-budget" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-plus-square me-2"></i>
+            <span>Add Budget</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/view-budgets" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-piggy-bank me-2"></i>
+            <span>View Budgets</span>
+          </a>
+        </li>
+
+        <!-- Insights Link -->
+        <li class="nav-item">
+          <a routerLink="/insights" routerLinkActive="active" class="nav-link">
             <i class="fas fa-chart-line me-2"></i>
             <span>View Insights</span>
           </a>
@@ -48,29 +55,18 @@ import { RouterModule } from '@angular/router';
       </ul>
       <hr />
       <div class="dropdown">
-        <a
-          href="#"
-          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          id="dropdownUser1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://placehold.co/32x32/6a11cb/ffffff?text=G"
-            alt=""
-            width="32"
-            height="32"
-            class="rounded-circle me-2"
-          />
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://placehold.co/32x32/6a11cb/ffffff?text=G" alt="" width="32" height="32"
+            class="rounded-circle me-2" />
           <strong>Geetesh</strong>
         </a>
-        <ul
-          class="dropdown-menu dropdown-menu-dark text-small shadow"
-          aria-labelledby="dropdownUser1"
-        >
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
           <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
       </div>
@@ -125,4 +121,4 @@ import { RouterModule } from '@angular/router';
     `,
   ],
 })
-export class Sidebar {}
+export class Sidebar { }

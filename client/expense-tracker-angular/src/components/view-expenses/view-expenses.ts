@@ -222,7 +222,6 @@ export class ViewExpenses implements OnInit, OnDestroy {
     this.expenseService.getMyExpenses();
     this.expenseService.expenses$.subscribe((expenses) => {
       this.expenses = expenses;
-      console.log(this.expenses);
       this.applyFilter();
     });
   }

@@ -7,6 +7,8 @@ import { HomeComponent } from '../components/home/home';
 import { AiAdviceComponent } from '../components/insights/insights';
 import { SummaryComponent } from '../components/summary/summary';
 import { ChartComponent } from '../components/chart/chart';
+import { BudgetForm } from '../components/budget-form/budget-form';
+import { Budgets } from '../components/budgets/budgets';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -18,6 +20,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'view-expenses', component: ViewExpenses, canActivate: [authGuard] },
+  {
+    path: 'add-budget',
+    component: BudgetForm,
+    canActivate: [authGuard],
+  },
+  { path: 'view-budgets', component: Budgets, canActivate: [authGuard] },
   {
     path: 'edit-expense/:id',
     component: ExpenseFormComponent,

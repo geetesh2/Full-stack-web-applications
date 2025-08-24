@@ -1,0 +1,115 @@
+/* Container for the form page, providing background and padding */
+.form-page-container {
+  background-color: #121212;
+  padding: 6rem 1rem;
+  width: 100%;
+  color: #e0e0e0;
+}
+
+/* Wrapper for the form with a glassmorphism effect */
+.form-wrapper {
+  background-color: rgba(38, 38, 38, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Title styling */
+.form-title {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Custom styles for Bootstrap form controls in dark theme */
+.form-control,
+.form-select {
+  background-color: #2c2c2c;
+  border-color: #444;
+  color: #e0e0e0;
+  padding: 1rem;
+}
+
+/* Fix for browser autofill background color */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #2c2c2c inset !important;
+  -webkit-text-fill-color: #e0e0e0 !important;
+}
+
+/* Focus state for form controls */
+.form-control:focus,
+.form-select:focus {
+  background-color: #2c2c2c;
+  border-color: #6a11cb;
+  color: #e0e0e0;
+  box-shadow: 0 0 0 0.25rem rgba(106, 17, 203, 0.25);
+}
+
+/* Styling for floating labels */
+.form-floating>label {
+  color: #888;
+}
+
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label,
+.form-floating>.form-select~label {
+  color: #6a11cb;
+}
+
+/* Specific padding for floating select elements */
+.form-select {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+/* Styling for the input group (e.g., currency symbol) */
+.input-group-text {
+  background-color: #2c2c2c;
+  border-color: #444;
+  color: #e0e0e0;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.input-group .form-control {
+  border-left: none;
+}
+
+.input-group:focus-within .input-group-text {
+  border-color: #6a11cb;
+}
+
+/* Primary button styling */
+.btn-primary {
+  background-color: #6a11cb;
+  border-color: #6a11cb;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #5e0fa8;
+  border-color: #5e0fa8;
+}
+
+.btn-primary:disabled {
+  background-color: #3a2951;
+  border-color: #3a2951;
+}
+
+/* Secondary button (Cancel) styling */
+.btn-secondary {
+  background-color: #444;
+  border-color: #444;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: #555;
+  border-color: #555;
+}
