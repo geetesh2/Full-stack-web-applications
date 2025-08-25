@@ -50,13 +50,9 @@ export class Budgets implements OnInit {
    * @param budget - The budget object to be deleted.
    */
   onDelete(budget: BudgetDto): void {
-    // 2. Call your service to delete the budget from the backend
-    // this.budgetService.deleteBudget(budget).subscribe(() => {
-    //   this.budgets = this.budgets.filter(b => b !== budget);
-    // });
-    // console.log('Deleting budget:', budget);
-    // // Remove from the local array for now
-    // this.budgets = this.budgets.filter(b => b !== budget);
+    this.budgetService.deleteBudget(budget.Id).subscribe(() => {
+      this.budgets = this.budgets.filter(b => b !== budget);
+    });
   }
 
   /**

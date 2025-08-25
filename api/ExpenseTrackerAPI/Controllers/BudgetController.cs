@@ -1,5 +1,6 @@
 using ExpenseTrackerAPI.DTOs;
 using ExpenseTrackerAPI.Interfaces;
+using ExpenseTrackerAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -27,5 +28,12 @@ public class BudgetController(IBudgetService budgetService) : ControllerBase
         var userId = GetUserId();
         var budgets = await budgetService.GetBudgetsAsync(userId);
         return Ok(new { data = budgets });
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteBudget(Guid id)
+    {
+        var success = await budgetService.DeleteBudgetAsync(id, GetUserId());
+        return success ? NoContent() : NotFound();
     }
 }

@@ -36,6 +36,15 @@ public class BudgetService : IBudgetService
         return budget;
     }
 
+    public async Task<bool> DeleteBudgetAsync(Guid budgetId, Guid userId)
+    {
+        var budget = await _context.Budgets.FirstOrDefaultAsync(e => e.Id == budgetId && e.UserId == userId);
+        if (budget == null) return false;
+        _context.Budgets.Remove(budget);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<IEnumerable<Budget>> GetBudgetsAsync(Guid userId)
     {
         return await _context.Budgets.Include(b => b.Category)

@@ -45,6 +45,7 @@ export class BudgetService {
           const responseArray = response.data || [];
 
           const mappedBudgets: BudgetDto[] = responseArray.map(b => ({
+            Id: b.id,
             CategoryName: b.category.name,
             LimitAmount: b.limitAmount,
             Month: b.month,
@@ -96,21 +97,14 @@ export class BudgetService {
     return this.http.put<void>(`${this.baseUrl}/${id}`, budget, {
       headers: this.getAuthHeaders(),
     }).pipe(
-      // After updating, refresh the list of budgets
       tap(() => this.getMyBudgets())
     );
   }
 
-  /**
-   * Deletes a budget by its ID.
-   * @param id - The ID of the budget to delete.
-   * @returns An Observable that completes when the deletion is successful.
-   */
   deleteBudget(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`, {
       headers: this.getAuthHeaders(),
     }).pipe(
-      // After deleting, refresh the list of budgets
       tap(() => this.getMyBudgets())
     );
   }
