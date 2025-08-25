@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-// import { BudgetService } from '../../services/budget.service'; // Create this service
 import { BudgetDto } from '../../models/budget.model';
 import { Observable } from 'rxjs';
 import { BudgetService } from '../../services/budget-service';
@@ -16,10 +15,10 @@ import { BudgetService } from '../../services/budget-service';
 })
 export class BudgetForm implements OnInit {
   myForm: FormGroup;
-  mode = 'create'; // For now, we'll focus on create mode
-  private budgetId: string | null = null; // For future edit functionality
+  mode = 'create';
+  private budgetId: string | null = null;
+  duplicateBudgetError = false; // Property to track the duplicate error state
 
-  // Mock data for dropdowns
   months = [
     { value: 1, name: 'January' }, { value: 2, name: 'February' },
     { value: 3, name: 'March' }, { value: 4, name: 'April' },
@@ -30,7 +29,7 @@ export class BudgetForm implements OnInit {
   ];
   years: number[] = [];
 
-  private budgetService = inject(BudgetService); // Uncomment when service is ready
+  private budgetService = inject(BudgetService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
@@ -46,16 +45,14 @@ export class BudgetForm implements OnInit {
 
   ngOnInit(): void {
     this.populateYears();
-    // In a real app, you would check for an ID in the route to determine if you are editing
-    // this.budgetId = this.route.snapshot.paramMap.get('id');
-    // if (this.budgetId) {
-    //   this.mode = 'edit';
-    //   // Load budget data and patch the form
-    // } else {
-    //   this.mode = 'create';
-    // }
+    // Fetch the latest budgets to ensure the duplicate check is accurate
+    this.budgetService.getMyBudgets();
 
-    // Set default month and year to the current ones
+    // Logic for edit mode (can be implemented later)
+    // this.budgetId = this.route.snapshot.paramMap.get('id');
+    // if (this.budgetId) { this.mode = 'edit'; /* ...load data... */ }
+
+    // Set default month and year
     const today = new Date();
     this.myForm.patchValue({
       Month: today.getMonth() + 1,
@@ -63,40 +60,51 @@ export class BudgetForm implements OnInit {
     });
   }
 
-  /**
-   * Populates the years array for the dropdown.
-   */
   populateYears(): void {
     const currentYear = new Date().getFullYear();
-    const startYear = currentYear - 2; // Go back 2 years
-    for (let i = currentYear + 2; i >= startYear; i--) { // Go forward 2 years
+    const startYear = currentYear - 2;
+    for (let i = currentYear + 2; i >= startYear; i--) {
       this.years.push(i);
     }
   }
 
-  /**
-   * Handles the form submission.
-   */
   onSubmit() {
+    // Reset the error on each submission attempt
+    this.duplicateBudgetError = false;
+
     if (this.myForm.invalid) {
-      this.myForm.markAllAsTouched(); // Trigger validation messages
+      this.myForm.markAllAsTouched();
       return;
     }
 
-    const budgetData: BudgetDto = this.myForm.value;
+    const newBudgetData: BudgetDto = this.myForm.value;
 
-    console.log('Submitting budget data:', budgetData);
-    // In a real app, you would call your service here:
+    // Get the current list of budgets from the service's BehaviorSubject
+    const existingBudgets = this.budgetService.budgets$.getValue();
+
+    // Check if a budget with the same category, month, and year already exists
+    const isDuplicate = existingBudgets.some(
+      b =>
+        b.CategoryName === newBudgetData.CategoryName &&
+        b.Month === newBudgetData.Month &&
+        b.Year === newBudgetData.Year
+    );
+
+    // If it's a duplicate and we are in 'create' mode, show an error and stop
+    if (isDuplicate && this.mode === 'create') {
+      this.duplicateBudgetError = true;
+      console.error('A budget for this category and month already exists.');
+      return; // Stop the submission
+    }
+
+    // Proceed with creating or updating the budget
     const operation = this.mode === 'edit' && this.budgetId
-      ? this.budgetService.updateBudget(this.budgetId, budgetData)
-      : this.budgetService.createBudget(budgetData);
+      ? this.budgetService.updateBudget(this.budgetId, newBudgetData)
+      : this.budgetService.createBudget(newBudgetData);
 
-     (operation  as Observable<any>).subscribe({
-      next: () => this.router.navigate(['/view-budgets']),
+    (operation as Observable<any>).subscribe({
+      next: () => this.router.navigate(['/view-budgets']), // Navigate to the main budget list
       error: (err) => console.error('Failed to save budget', err)
     });
-
-    // For now, just navigate back
-    this.router.navigate(['/view-budgets']);
   }
 }

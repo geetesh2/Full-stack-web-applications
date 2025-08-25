@@ -66,6 +66,11 @@
               </div>
             </div>
 
+            <!-- NEW: Duplicate Budget Error Message -->
+            <div *ngIf="duplicateBudgetError" class="alert alert-danger mt-3">
+              A budget for this category and month already exists. Please choose a different combination.
+            </div>
+
             <!-- Action Buttons -->
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mt-4">
               <button type="button" class="btn btn-secondary btn-lg" routerLink="/budgets">

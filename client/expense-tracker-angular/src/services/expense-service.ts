@@ -1,8 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ExpenseDto } from '../models/expense.model';
 import { Expense } from '../models/expenseResponse.model';
+
+export interface RawExpenseResponse {
+  id: string;
+  userId: string;
+  amount: number;
+  description?: string;
+  date: string; 
+  category?: {
+    id: string;
+    name: string;
+  };
+}
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +22,7 @@ import { Expense } from '../models/expenseResponse.model';
 export class ExpenseService {
   private baseUrl =
     // 'https://full-stack-web-applications-2.onrender.com/api/expense';
-  'http://localhost:5225/api/expense'; // Adjust port if needed
+    'http://localhost:5225/api/expense'; // Adjust port if needed
 
   private expensesSubject = new BehaviorSubject<Expense[]>([]);
   expenses$ = this.expensesSubject.asObservable();
@@ -24,25 +36,64 @@ export class ExpenseService {
     });
   }
 
+  // 🔹 API से data लाकर map करना
   getMyExpenses(): void {
     this.http
-      .get<Expense[]>(`${this.baseUrl}/me`, {
+      .get<RawExpenseResponse[]>(`${this.baseUrl}/me`, {
         headers: this.getAuthHeaders(),
       })
-      .subscribe((expenses) => this.expensesSubject.next(expenses));
+      .pipe(
+        map((rawExpenses) =>
+          rawExpenses.map<Expense>((raw) => ({
+            id: raw.id,
+            userId: raw.userId,
+            amount: raw.amount,
+            description: raw.description || undefined,
+            expenseType: raw.category?.name ?? 'Unknown',
+            date: new Date(raw.date),
+          }))
+        )
+      )
+      .subscribe({
+        next: (mappedExpenses) => this.expensesSubject.next(mappedExpenses),
+        error: (err) => {
+          console.error('❌ Failed to fetch or map expenses:', err);
+          this.expensesSubject.next([]);
+        },
+      });
   }
 
   getExpense(id: string): Observable<Expense> {
-    return this.http.get<Expense>(`${this.baseUrl}/${id}`, {
+    return this.http.get<RawExpenseResponse>(`${this.baseUrl}/${id}`, {
       headers: this.getAuthHeaders(),
-    });
+    })
+    .pipe(
+      map((raw) => ({
+        id: raw.id,
+        userId: raw.userId,
+        amount: raw.amount,
+        description: raw.description || undefined,
+        expenseType: raw.category?.name ?? 'Unknown',
+        date: new Date(raw.date),
+      }))
+    );
   }
 
   createExpense(expense: ExpenseDto): Observable<Expense> {
     console.log('Creating expense:', expense);
-    return this.http.post<Expense>(this.baseUrl, expense, {
+    return this.http.post<RawExpenseResponse>(this.baseUrl, expense, {
       headers: this.getAuthHeaders(),
-    });
+    })
+    .pipe(
+      map((raw) => ({
+        id: raw.id,
+        userId: raw.userId,
+        amount: raw.amount,
+        description: raw.description || undefined,
+        expenseType: raw.category?.name ?? 'Unknown',
+        date: new Date(raw.date),
+      }))
+    );
   }
 
   updateExpense(id: string, expense: ExpenseDto): Observable<void> {
