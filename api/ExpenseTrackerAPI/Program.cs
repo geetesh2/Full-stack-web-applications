@@ -1,6 +1,6 @@
 using AspNetCoreRateLimit;
 using ExpenseTrackerAPI.Context;
-using ExpenseTrackerAPI.Extensions; // <-- Add this using statement
+using ExpenseTrackerAPI.Extensions; 
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
