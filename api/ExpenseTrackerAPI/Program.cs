@@ -34,7 +34,7 @@ try
 
     // Add DBContext
     builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("OnlineConnection")));
 
     var app = builder.Build();
 
@@ -42,11 +42,8 @@ try
     app.UseSerilogRequestLogging(); // Log all incoming requests
     app.UseExceptionHandler();      // Use global error handler
 
-    if (app.Environment.IsDevelopment())
-    {
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExpenseTrackerAPI v1"));
-    }
 
     // Apply DB Migrations
     using (var scope = app.Services.CreateScope())
@@ -61,6 +58,8 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+    Console.WriteLine("Swagger URL: http://localhost:5225/swagger/index.html");
+
     app.Run();
 }
 catch (Exception ex)
