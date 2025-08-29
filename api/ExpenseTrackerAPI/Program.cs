@@ -58,8 +58,6 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
-    Console.WriteLine("Swagger URL: http://localhost:5225/swagger/index.html");
-
     app.Run();
 }
 catch (Exception ex)

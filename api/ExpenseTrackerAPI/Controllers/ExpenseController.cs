@@ -33,7 +33,6 @@ public class ExpenseController(IExpenseService expenseService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ExpenseDto dto)
     {
-        Console.WriteLine(dto);
         var newExpense = await expenseService.CreateExpenseAsync(dto, GetUserId());
         return Ok(newExpense);
     }
