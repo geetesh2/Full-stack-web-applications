@@ -1,6 +1,6 @@
 using AspNetCoreRateLimit;
 using ExpenseTrackerAPI.Context;
-using ExpenseTrackerAPI.Extensions; 
+using ExpenseTrackerAPI.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -42,8 +42,8 @@ try
     app.UseSerilogRequestLogging(); // Log all incoming requests
     app.UseExceptionHandler();      // Use global error handler
 
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExpenseTrackerAPI v1"));
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExpenseTrackerAPI v1"));
 
     // Apply DB Migrations
     using (var scope = app.Services.CreateScope())
@@ -52,7 +52,7 @@ try
         db.Database.Migrate();
     }
 
-    app.UseHttpsRedirection();
+    // app.UseHttpsRedirection(); // <-- REMOVE OR COMMENT OUT THIS LINE
     app.UseIpRateLimiting();
     app.UseCors("AllowSpecificOrigins"); // Use the named CORS policy
     app.UseAuthentication();
