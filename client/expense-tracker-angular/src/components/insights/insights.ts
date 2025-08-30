@@ -253,13 +253,11 @@ export class AiAdviceComponent implements OnInit {
         if (expenses && expenses.length > 0) {
           this.fetchInsightsFromBackend();
         } else {
-          console.log('No expenses found to analyze.');
           this.isLoading = false;
           this.adviceHtml = null;
         }
       },
       error: (err) => {
-        console.error('Error fetching expenses:', err);
         this.isLoading = false;
         this.adviceHtml = null;
       },
@@ -276,15 +274,12 @@ export class AiAdviceComponent implements OnInit {
           // Process the raw text from the backend into basic HTML for better styling
           const processedHtml = this.processTextToHtml(response.data);
           this.adviceHtml = this.sanitizer.bypassSecurityTrustHtml(processedHtml);
-          console.log('Received and processed AI advice.');
         } else {
-          console.error('Invalid response structure from backend:', response);
           this.adviceHtml = null;
         }
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error calling backend API:', err);
         this.adviceHtml = null;
         this.isLoading = false;
       },

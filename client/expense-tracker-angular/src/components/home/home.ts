@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
       this.budgetService.budgets$
     ]).subscribe(([expenses, budgets]) => {
       this.allExpenses = expenses;
-      console.log('Fetched Expenses:', this.allExpenses);
       this.allBudgets = budgets as BudgetDto[]; // Cast to Budget interface
       this.calculateMonthlySummary();
     });
@@ -100,7 +99,6 @@ export class HomeComponent implements OnInit {
       Health: 'fas fa-heartbeat',
       Other: 'fas fa-ellipsis-h',
     };
-    console.log(type, icons[type]);
     return icons[type] || 'fas fa-question-circle';
   }
 

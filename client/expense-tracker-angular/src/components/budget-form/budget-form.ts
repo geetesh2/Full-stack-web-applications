@@ -93,8 +93,7 @@ export class BudgetForm implements OnInit {
     // If it's a duplicate and we are in 'create' mode, show an error and stop
     if (isDuplicate && this.mode === 'create') {
       this.duplicateBudgetError = true;
-      console.error('A budget for this category and month already exists.');
-      return; // Stop the submission
+      return; 
     }
 
     // Proceed with creating or updating the budget

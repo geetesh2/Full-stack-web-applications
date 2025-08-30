@@ -22,7 +22,7 @@ export interface RawExpenseResponse {
 export class ExpenseService {
   private baseUrl =
     // 'https://full-stack-web-applications-2.onrender.com/api/expense';
-    'http://localhost:5225/api/expense'; // Adjust port if needed
+    'https://full-stack-web-applications-expense-api.onrender.com/api/expense'; // Adjust port if needed
 
   private expensesSubject = new BehaviorSubject<Expense[]>([]);
   expenses$ = this.expensesSubject.asObservable();
@@ -57,7 +57,6 @@ export class ExpenseService {
       .subscribe({
         next: (mappedExpenses) => this.expensesSubject.next(mappedExpenses),
         error: (err) => {
-          console.error('❌ Failed to fetch or map expenses:', err);
           this.expensesSubject.next([]);
         },
       });
@@ -80,7 +79,6 @@ export class ExpenseService {
   }
 
   createExpense(expense: ExpenseDto): Observable<Expense> {
-    console.log('Creating expense:', expense);
     return this.http.post<RawExpenseResponse>(this.baseUrl, expense, {
       headers: this.getAuthHeaders(),
     })

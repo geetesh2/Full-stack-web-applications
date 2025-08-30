@@ -9,7 +9,7 @@ import { BudgetResponse } from '../models/budgetResponse.model';
 })
 export class BudgetService {
   // Base URL for the budget API endpoint. Adjust if your backend is different.
-  private baseUrl = 'http://localhost:5225/api/budget';
+  private baseUrl = 'https://full-stack-web-applications-expense-api.onrender.com/api/budget';
 
   // BehaviorSubject to hold the list of budgets and notify subscribers of changes.
    budgets$ = new BehaviorSubject<BudgetDto[]>([]);
@@ -39,9 +39,6 @@ export class BudgetService {
       })
       .subscribe({
         next: (response) => {
-          console.log("Raw budget response:", response);
-
-
           const responseArray = response.data || [];
 
           const mappedBudgets: BudgetDto[] = responseArray.map(b => ({

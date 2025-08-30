@@ -24,7 +24,6 @@ export class Budgets implements OnInit {
   ngOnInit(): void {
     this.budgetService.budgets$.subscribe(data => {
       this.budgets = data; // Ensure budgets is always an array
-      console.log('Fetched budgets:', data);
     });
     this.budgetService.getMyBudgets();
     
