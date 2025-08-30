@@ -17,6 +17,8 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Render provides PORT env variable
-ENV ASPNETCORE_URLS=http://+:$PORT
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+
 
 ENTRYPOINT ["dotnet", "ExpenseTrackerAPI.dll"]
