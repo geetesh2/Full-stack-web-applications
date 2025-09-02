@@ -1,6 +1,7 @@
 using AspNetCoreRateLimit;
 using ExpenseTrackerAPI.Context;
 using ExpenseTrackerAPI.Extensions;
+using ExpenseTrackerAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -35,6 +36,15 @@ try
     // Add DBContext
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("OnlineConnection")));
+
+
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = builder.Configuration.GetConnectionString("Redis");
+        options.InstanceName = "ExpenseTrackerAPI_";
+
+    });
+    builder.Services.AddScoped<ExpenseTrackerAPI.Services.Caching.IRedisCacheService, ExpenseTrackerAPI.Services.Caching.RedisCacheService>();
 
     var app = builder.Build();
 

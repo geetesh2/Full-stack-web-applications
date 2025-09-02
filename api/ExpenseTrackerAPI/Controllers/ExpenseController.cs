@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using ExpenseTrackerAPI.DTOs;
 using ExpenseTrackerAPI.Interfaces;
+using ExpenseTrackerAPI.Services.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,9 @@ namespace ExpenseTrackerAPI.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class ExpenseController(IExpenseService expenseService) : ControllerBase
+public class ExpenseController(IExpenseService expenseService, IRedisCacheService redisCacheService) : ControllerBase
 {
+
     private Guid GetUserId()
     {
         return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -26,8 +28,16 @@ public class ExpenseController(IExpenseService expenseService) : ControllerBase
     [HttpGet("me")]
     public async Task<ActionResult> GetMyExpenses()
     {
-        var expenses = await expenseService.GetUserExpensesAsync(GetUserId());
-        return Ok(expenses);
+        var cacheExpense = redisCacheService.GetData<List<ExpenseDto>>($"expenses_{GetUserId()}");
+        if (cacheExpense != null)
+        {
+            return Ok(cacheExpense);
+        }
+        else {             
+            var expenses = await expenseService.GetUserExpensesAsync(GetUserId());
+            redisCacheService.SetData($"expenses_{GetUserId()}", expenses.ToList(), TimeSpan.FromMinutes(5));
+            return Ok(expenses);
+        }
     }
 
     [HttpPost]
