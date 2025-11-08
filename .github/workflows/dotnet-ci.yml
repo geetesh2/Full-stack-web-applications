@@ -28,6 +28,7 @@ jobs:
       - name: Test
         run: |
           if [ -d "api/ExpenseTrackerAPI.Tests" ]; then
+            dotnet build api/ExpenseTrackerAPI.Tests/ExpenseTrackerAPI.Tests.csproj --configuration Release
             dotnet test api/ExpenseTrackerAPI.Tests/ExpenseTrackerAPI.Tests.csproj --no-build --verbosity normal
           else
             echo "No test project found — skipping tests."
