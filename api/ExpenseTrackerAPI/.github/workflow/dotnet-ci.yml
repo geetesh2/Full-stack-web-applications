@@ -1,0 +1,48 @@
+﻿name: .NET CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore api/ExpenseTrackerAPI/ExpenseTrackerAPI.csproj
+
+      - name: Build
+        run: dotnet build api/ExpenseTrackerAPI/ExpenseTrackerAPI.csproj --configuration Release --no-restore
+
+      - name: Test
+        run: |
+          if [ -d "tests" ]; then
+            dotnet test --no-build --verbosity normal
+          else
+            echo "No tests found, skipping test step."
+          fi
+
+      - name: Build Docker image
+        run: docker build -t expense-tracker-api -f api/ExpenseTrackerAPI/Dockerfile .
+
+      - name: Verify Docker container runs
+        run: |
+          docker run -d -p 8080:80 --name test-api expense-tracker-api
+          sleep 5
+          docker ps | grep test-api && echo "Container is running successfully" || (echo "Container failed to run" && exit 1)
+          docker stop test-api && docker rm test-api
+
+      - name: Cleanup
+        if: always()
+        run: docker system prune -f

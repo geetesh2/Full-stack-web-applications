@@ -30,4 +30,8 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include=".github\workflow\dotnet-ci.yml" />
+    </ItemGroup>
+
 </Project>
