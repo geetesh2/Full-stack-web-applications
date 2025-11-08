@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cM3SLqevPl4=",
+  "dgSpecHash": "9NNK1b0Ni5E=",
   "success": true,
   "projectFilePath": "C:\\Users\\Geetesh\\source\\repos\\geetesh2\\Full-stack-web-applications\\api\\ExpenseTrackerAPI.Tests\\ExpenseTrackerAPI.Tests.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.6\\microsoft.entityframeworkcore.9.0.6.nupkg.sha512",
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.6\\microsoft.entityframeworkcore.abstractions.9.0.6.nupkg.sha512",
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.6\\microsoft.entityframeworkcore.analyzers.9.0.6.nupkg.sha512",
+    "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\9.0.6\\microsoft.entityframeworkcore.inmemory.9.0.6.nupkg.sha512",
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.1\\microsoft.entityframeworkcore.relational.9.0.1.nupkg.sha512",
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.extensions.apidescription.server\\9.0.0\\microsoft.extensions.apidescription.server.9.0.0.nupkg.sha512",
     "C:\\Users\\Geetesh\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.8\\microsoft.extensions.caching.abstractions.9.0.8.nupkg.sha512",
