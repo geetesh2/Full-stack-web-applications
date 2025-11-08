@@ -8,11 +8,11 @@ public class User
     [Required] 
     [EmailAddress]
     [MaxLength(100)]
-    public string Email { get; set; }
+    public required string Email { get; set; }
     
     [Required]
     [MaxLength(200)]
-    public string HashedPassword { get; set; }
+    public required string HashedPassword { get; set; }
     
     public DateTime CreatedAt { get; set; } 
     
