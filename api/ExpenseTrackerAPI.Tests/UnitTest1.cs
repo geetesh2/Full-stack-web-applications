@@ -10,7 +10,7 @@ namespace ExpenseTrackerAPI.Tests
             int a = 2;
             int b = 3;
             int result = a + b;
-            Assert.Equal(5, result);
+            Assert.Equal(10, result);
         }
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTrackerAPI", "ExpenseTrackerAPI.csproj", "{3061A3CD-9B96-431D-BF76-19EEDBEC9C10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTrackerAPI.Tests", "..\ExpenseTrackerAPI.Tests\ExpenseTrackerAPI.Tests.csproj", "{0DC565F6-9C82-C364-4B85-4EC657C98867}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{3061A3CD-9B96-431D-BF76-19EEDBEC9C10}.Release|x64.Build.0 = Release|Any CPU
 		{3061A3CD-9B96-431D-BF76-19EEDBEC9C10}.Release|x86.ActiveCfg = Release|Any CPU
 		{3061A3CD-9B96-431D-BF76-19EEDBEC9C10}.Release|x86.Build.0 = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|x64.Build.0 = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Debug|x86.Build.0 = Debug|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|x64.ActiveCfg = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|x64.Build.0 = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|x86.ActiveCfg = Release|Any CPU
+		{0DC565F6-9C82-C364-4B85-4EC657C98867}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
