@@ -35,7 +35,14 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t expense-tracker-api -f api/ExpenseTrackerAPI/Dockerfile .
-        
+
       - name: Cleanup
         if: always()
         run: docker system prune -f
+
+  docker:
+    needs: build-test-docker
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Docker job executed after build-test-docker job."
+           
