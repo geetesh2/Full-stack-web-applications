@@ -28,16 +28,14 @@ public class ExpenseController(IExpenseService expenseService, IRedisCacheServic
     [HttpGet("me")]
     public async Task<ActionResult> GetMyExpenses()
     {
-        var cacheExpense = redisCacheService.GetData<List<ExpenseDto>>($"expenses_{GetUserId()}");
-        if (cacheExpense != null)
-        {
-            return Ok(cacheExpense);
-        }
-        else {             
-            var expenses = await expenseService.GetUserExpensesAsync(GetUserId());
-            redisCacheService.SetData($"expenses_{GetUserId()}", expenses.ToList(), TimeSpan.FromMinutes(5));
-            return Ok(expenses);
-        }
+        // var cacheExpense = redisCacheService.GetData<List<ExpenseDto>>($"expenses_{GetUserId()}");
+        // if (cacheExpense != null)
+        // {
+        //     return Ok(cacheExpense);
+        // }
+        var expenses = await expenseService.GetUserExpensesAsync(GetUserId());
+        redisCacheService.SetData($"expenses_{GetUserId()}", expenses.ToList(), TimeSpan.FromMinutes(5));
+        return Ok(expenses);
     }
 
     [HttpPost]
