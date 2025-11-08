@@ -27,10 +27,10 @@ jobs:
 
       - name: Test
         run: |
-          if [ -d "tests" ]; then
-            dotnet test --no-build --verbosity normal
+          if [ -d "api/ExpenseTrackerAPI.Tests" ]; then
+            dotnet test api/ExpenseTrackerAPI.Tests/ExpenseTrackerAPI.Tests.csproj --no-build --verbosity normal
           else
-            echo "No tests found, skipping test step."
+            echo "No test project found — skipping tests."
           fi
 
       - name: Build Docker image
@@ -39,7 +39,7 @@ jobs:
       - name: Cleanup
         if: always()
         run: docker system prune -f
-
+      
   docker:
     needs: build-test-docker
     runs-on: ubuntu-latest
