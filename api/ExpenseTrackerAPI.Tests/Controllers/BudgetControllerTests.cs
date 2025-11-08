@@ -1,14 +1,9 @@
 using ExpenseTrackerAPI.Controllers;
 using ExpenseTrackerAPI.DTOs;
 using ExpenseTrackerAPI.Models;
-using ExpenseTrackerAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
-using Xunit;
 
 namespace ExpenseTrackerAPI.Tests.Controllers;
 

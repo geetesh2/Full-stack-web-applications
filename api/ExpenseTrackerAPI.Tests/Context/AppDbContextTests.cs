@@ -1,9 +1,6 @@
 using ExpenseTrackerAPI.Context;
 using ExpenseTrackerAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using Xunit;
 
 namespace ExpenseTrackerAPI.Tests.Context;
 
