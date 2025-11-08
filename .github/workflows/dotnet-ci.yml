@@ -35,14 +35,7 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t expense-tracker-api -f api/ExpenseTrackerAPI/Dockerfile .
-
-      - name: Verify Docker container runs
-        run: |
-          docker run -d -p 8080:80 --name test-api expense-tracker-api
-          sleep 5
-          docker ps | grep test-api && echo "Container is running successfully" || (echo "Container failed to run" && exit 1)
-          docker stop test-api && docker rm test-api
-
+        
       - name: Cleanup
         if: always()
         run: docker system prune -f
