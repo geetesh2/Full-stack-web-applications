@@ -10,6 +10,13 @@
   </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove=".github\**" />
+      <Content Remove=".github\**" />
+      <EmbeddedResource Remove=".github\**" />
+      <None Remove=".github\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
@@ -28,10 +35,6 @@
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="StackExchange.Redis" Version="2.9.11" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include=".github\workflow\dotnet-ci.yml" />
     </ItemGroup>
 
 </Project>
